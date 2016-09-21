@@ -1,31 +1,21 @@
+(defvar chinese-number-table (list "零" "一" "二" "三" "四" "五" "六" "七" "八" "九"))
+(defvar traditinal-chinese-number-table (list "零" "壹" "贰" "叁" "肆" "伍" "陆" "柒" "捌" "玖"))
+(defvar weight-table (list "" "十" "百" "千"))
+(defvar heavy-weight-table (list "" "万" "亿"))
 
-(setq chinese-number-table (list "零" "一" "二" "三" "四" "五" "六" "七" "八" "九"))
-(setq traditinal-chinese-number-table (list "零" "壹" "贰" "叁" "肆" "伍" "陆" "柒" "捌" "玖"))
-(setq weight-table (list "" "十" "百" "千"))
-(setq heavy-weight-table (list "" "万" "亿"))
-
-(defun get-chinese-number-from-list (number number-table)
-  (if (= number 0)
-      (car number-table)
-    (get-chinese-number-from-list (- number 1) (cdr number-table))))
 
 (defun get-chinese-number (number)
-  (get-chinese-number-from-list number chinese-number-table))
-
-(defun get-chinese-weight-from-list (number weight-table)
-  (if (= number 0)
-      (car weight-table)
-    (get-chinese-weight-from-list (- number 1) (cdr weight-table))))
+  (nth number chinese-number-table))
 
 (defun get-chinese-weight (number)
-  (get-chinese-weight-from-list number weight-table))
+  (nth number weight-table))
 
 (defun get-chinese-heavy-weight (number)
-  (get-chinese-weight-from-list number heavy-weight-table))
+  (nth number heavy-weight-table))
 
 (defun get-chinese-number-and-weight-general (number weight-index fun-to-convert-number fun-to-get-weight)
   (if (= number 0)
-      (fun-to-convert-number 0)
+      (funcall fun-to-convert-number 0)
     (concat (funcall fun-to-convert-number number) (funcall fun-to-get-weight weight-index))))
 
 (defun get-chinese-number-and-weight (number weight-index)
@@ -60,7 +50,7 @@
 (defun chinese-high-number (number)
   (chinese-high-number-iter number 0 t))
 
-(chinese-small-number 1230)
-(chinese-high-number 380070500)
+;; (chinese-small-number 1230)
+;; (chinese-high-number 380070500)
 
 (provide 'chinese-number)
