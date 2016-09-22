@@ -24,24 +24,24 @@
 (defun get-chinese-number-and-weight-high (number weight-index next-is-zero)
   (get-chinese-number-and-weight-general number weight-index 'chinese-small-number 'get-chinese-heavy-weight))
 
-(defun get-chinese-number-weight (number weight-index next-is-zero)
+(defun get-chinese-number-weight (number weight-index disable-zero)
   (if (= number 0)
-      (if next-is-zero "" (get-chinese-number 0))
+      (if disable-zero "" (get-chinese-number 0))
     (get-chinese-number-and-weight number weight-index))
   )
 
-(defun chinese-number-general-iter (number index next-is-zero base fun-to-convert-small-number)
+(defun chinese-number-general-iter (number index next-is-zero base fun-to-convert-small-number iter-depth)
   (let ((real-number (% number base)))
   (if (< number base)
-      (funcall fun-to-convert-small-number number index next-is-zero)
-    (concat (chinese-number-general-iter (/ number base) (+ index 1) (= real-number 0) base fun-to-convert-small-number)
+      (funcall fun-to-convert-small-number number index (if (= iter-depth 0) nil next-is-zero))
+    (concat (chinese-number-general-iter (/ number base) (+ index 1) (= real-number 0) base fun-to-convert-small-number (+ iter-depth 1))
 	    (funcall fun-to-convert-small-number real-number index next-is-zero)))))
 
 (defun chinese-small-number-iter (number index next-is-zero)
-  (chinese-number-general-iter number index next-is-zero 10 'get-chinese-number-weight))
+  (chinese-number-general-iter number index next-is-zero 10 'get-chinese-number-weight 0))
 
 (defun chinese-high-number-iter (number index next-is-zero)
-  (chinese-number-general-iter number index next-is-zero 10000 'get-chinese-number-and-weight-high)
+  (chinese-number-general-iter number index next-is-zero 10000 'get-chinese-number-and-weight-high 0)
   )
 
 (defun chinese-small-number (number)
@@ -50,7 +50,14 @@
 (defun chinese-high-number (number)
   (chinese-high-number-iter number 0 t))
 
-;; (chinese-small-number 1230)
-;; (chinese-high-number 380070500)
+(defun convert-number-to-chinese (number)
+  "convert a number from Arbic to Chinese format."
+  (interactive "nInput the Arbic number: ")
+  (message "The chinese format for number %d is %s" number (chinese-high-number number)))
+
+;; for test
+;;(convert-number-to-chinese 0)
+;;(convert-number-to-chinese 1230)
+;;(convert-number-to-chinese 380070500)
 
 (provide 'chinese-number)
