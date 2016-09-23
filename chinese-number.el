@@ -50,8 +50,8 @@
   (cnum-chinese-high-number-iter number 0 t))
 
 (defun cnum-convert-number-to-chinese (number)
-  "convert a number from Arbic to Chinese format."
-  (interactive "nInput the Arbic number: ")
+  "convert a number from Arabic to Chinese format."
+  (interactive "nInput the Arabic number: ")
   (message "The chinese format for number %d is %s" number (cnum-chinese-high-number number)))
 
 ;; for test
