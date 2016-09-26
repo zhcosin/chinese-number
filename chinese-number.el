@@ -1,3 +1,65 @@
+;;; chinese-number.el --- An package for converting number format between Arabic and Chinese.
+
+;; * Header
+;; Copyright (c) 2015, zhcosin
+
+;; Author: zhcosin<zhcosin@163.com>
+;; URL: https://github.com/zhcosin/chinese-number
+;; Created: 2016-09-21
+
+;;; License:
+
+;; This file is not part of GNU Emacs.
+
+;; This program is free software; you can redistribute it and/or
+;; modify it under the terms of the GNU General Public License
+;; as published by the Free Software Foundation; either version 3
+;; of the License, or (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with GNU Emacs; see the file COPYING.  If not, write to the
+;; Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+;; Boston, MA 02110-1301, USA.
+
+;;; Commentary:
+
+;; Chinese-number is a package for converting number format between
+;; Arabic and Chinese.
+;;
+;; Chinese-number lives in a Git repository. To obtain it, do
+;;
+;;     git clone https://github.com/zhcosin/chinese-number.git
+;;
+;; Move chinese-number to ~/.emacs.d/chinese-number (or somewhere
+;; else in the `load-path'). Then add the following lines to ~/.emacs:
+;;
+;;     (add-to-list 'load-path "~/.emacs.d/chinese-number")
+;;     (require 'chinese-number)
+;;
+;; If you want to convert a Arabic number to chinese, you can:
+;;
+;;     M-x cnum--convert-arabic-number-to-chinese
+;;
+;; and input the Arbic number, or you may want to convert a number
+;; from Chinese to Arabic, you can:
+;;
+;;     M-x cnum--convert-chinese-number-to-arabic
+;;
+;; If you want use this converting in your elisp code, then you can
+;; call the following two function:
+;;
+;;     cnum-convert-arabic-number-to-chinese
+;;
+;; and
+;;
+;;     cnum-convert-chinese-number-to arabic
+;;.
+
 (defvar cnum-chinese-number-list (list "零" "一" "二" "三" "四" "五" "六" "七" "八" "九"))
 (defvar cnum-traditinal-chinese-number-list (list "零" "壹" "贰" "叁" "肆" "伍" "陆" "柒" "捌" "玖"))
 (defvar cnum-weight-list (list "" "十" "百" "千"))
@@ -49,10 +111,19 @@
 (defun cnum-convert-arabic-number-to-chinese (number)
   (cnum-convert-arabic-number-to-chinese-iter number 0 t))
 
+(defun cnum-convert-chinese-number-to-arbic (number)
+  ;; TODO: implement.
+  0)
+
 (defun cnum--convert-arabic-number-to-chinese (number)
-  "convert a number from Arabic to Chinese format."
+  "convert a number in Arabic format to Chinese."
   (interactive "nInput the Arabic number: ")
   (message "The chinese format for number %d is %s" number (cnum-convert-arabic-number-to-chinese number)))
+
+(defun cnum--convert-chinese-number-to-arabic (number)
+  "convert a number in Chinese format to Arabic."
+  (interactive "sInput the Chinese number: ")
+  (message "NO SUPPORT: The converting from chinese to arabic is not support now!"))
 
 ;; for test
 ;;(cnum--convert-arabic-number-to-chinese 0)
