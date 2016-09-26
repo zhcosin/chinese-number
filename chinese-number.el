@@ -60,17 +60,19 @@
 ;;     cnum-convert-chinese-number-to arabic
 ;;.
 
-(defvar cnum-chinese-number-list (list "零" "一" "二" "三" "四" "五" "六" "七" "八" "九"))
-(defvar cnum-traditinal-chinese-number-list (list "零" "壹" "贰" "叁" "肆" "伍" "陆" "柒" "捌" "玖"))
-(defvar cnum-weight-list (list "" "十" "百" "千"))
+(defvar cnum-chinese-use-lowercase t)
+(defvar cnum-lowercase-chinese-number-list (list "零" "一" "二" "三" "四" "五" "六" "七" "八" "九"))
+(defvar cnum-uppercase-chinese-number-list (list "零" "壹" "贰" "叁" "肆" "伍" "陆" "柒" "捌" "玖"))
+(defvar cnum-lowercase-chinese-weight-list (list "" "十" "百" "千"))
+(defvar cnum-uppercase-chinese-weight-list (list "" "拾" "百" "仟"))
 (defvar cnum-high-level-weight-list (list "" "万" "亿"))
 
 
 (defun cnum-get-chinese-number-by-index (index)
-  (nth index cnum-chinese-number-list))
+  (nth index (if cnum-chinese-use-lowercase cnum-lowercase-chinese-number-list cnum-uppercase-chinese-number-list)))
 
 (defun cnum-get-chinese-weight (index)
-  (nth index cnum-weight-list))
+  (nth index (if cnum-chinese-use-lowercase cnum-lowercase-chinese-weight-list cnum-uppercase-chinese-weight-list)))
 
 (defun cnum-get-chinese-high-level-weight (index)
   (nth index cnum-high-level-weight-list))
@@ -128,6 +130,6 @@
 ;; for test
 ;;(cnum--convert-arabic-number-to-chinese 0)
 ;;(cnum--convert-arabic-number-to-chinese 1230)
-;;(cnum--convert-arabic-number-to-chinese 380070500)
+(cnum--convert-arabic-number-to-chinese 380070500)
 
 (provide 'chinese-number)
