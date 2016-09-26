@@ -1,4 +1,4 @@
-;;; chinese-number.el --- An package for converting number format between Arabic and Chinese.
+;;; chinese-number.el --- A package for converting number format between Arabic and Chinese.
 
 ;; * Header
 ;; Copyright (c) 2015, zhcosin
