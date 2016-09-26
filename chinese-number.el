@@ -85,26 +85,31 @@
 (defun cnum-get-chinese-number-and-weight (number-index weight-index)
   (cnum-get-chinese-number-and-weight-general number-index weight-index 'cnum-get-chinese-number-by-index 'cnum-get-chinese-weight))
 
-(defun cnum-get-chinese-number-and-weight-high (number weight-index disable-zero)
-  (cnum-get-chinese-number-and-weight-general number weight-index 'cnum-convert-arabic-number-less-than-10000-to-chinese 'cnum-get-chinese-high-level-weight))
+(defun cnum-get-chinese-number-and-weight-high (number weight-index base disable-zero is-last-slice)
+  (let ((full-result
+	 (cnum-get-chinese-number-and-weight-general number weight-index 'cnum-convert-arabic-number-less-than-10000-to-chinese 'cnum-get-chinese-high-level-weight)))
+    (cond ((= number 0) (if disable-zero "" full-result))
+	  ((< number (/ base 10)) (if is-last-slice full-result (concat (cnum-get-chinese-number-by-index 0) full-result)))
+	  (t full-result))))
 
-(defun cnum-get-chinese-number-weight (number weight-index disable-zero)
+(defun cnum-get-chinese-number-weight (number weight-index base disable-zero is-last-slice)
   (if (= number 0)
       (if disable-zero "" (cnum-get-chinese-number-by-index 0))
     (cnum-get-chinese-number-and-weight number weight-index)))
 
-(defun cnum-convert-to-chinese-general-iter (number index next-is-zero base fun-to-convert-small-number iter-depth)
-  (let ((real-number (% number base)))
-  (if (< number base)
-      (funcall fun-to-convert-small-number number index (if (= iter-depth 0) nil next-is-zero))
-    (concat (cnum-convert-to-chinese-general-iter (/ number base) (+ index 1) (= real-number 0) base fun-to-convert-small-number (+ iter-depth 1))
-	    (funcall fun-to-convert-small-number real-number index next-is-zero)))))
+(defun cnum-convert-to-chinese-general-iter (number index slice-index next-is-zero base fun-to-convert-small-number)
+  (let ((this-slice (% number base))
+	(next-slice (/ number base)))
+  (if (= next-slice 0)
+      (funcall fun-to-convert-small-number number index base (if (= slice-index 0) nil next-is-zero) t)
+    (concat (cnum-convert-to-chinese-general-iter next-slice (+ index 1) (+ slice-index 1) (= this-slice 0) base fun-to-convert-small-number)
+	    (funcall fun-to-convert-small-number this-slice index base next-is-zero nil)))))
 
 (defun cnum-convert-arabic-number-less-than-10000-to-chinese-iter (number index next-is-zero)
-  (cnum-convert-to-chinese-general-iter number index next-is-zero 10 'cnum-get-chinese-number-weight 0))
+  (cnum-convert-to-chinese-general-iter number index 0 next-is-zero 10 'cnum-get-chinese-number-weight))
 
 (defun cnum-convert-arabic-number-to-chinese-iter (number index next-is-zero)
-  (cnum-convert-to-chinese-general-iter number index next-is-zero 10000 'cnum-get-chinese-number-and-weight-high 0)
+  (cnum-convert-to-chinese-general-iter number index 0 next-is-zero 10000 'cnum-get-chinese-number-and-weight-high)
   )
 
 (defun cnum-convert-arabic-number-less-than-10000-to-chinese (number)
@@ -130,6 +135,6 @@
 ;; for test
 ;;(cnum--convert-arabic-number-to-chinese 0)
 ;;(cnum--convert-arabic-number-to-chinese 1230)
-(cnum--convert-arabic-number-to-chinese 380070500)
+;;(cnum--convert-arabic-number-to-chinese 380070500)
 
 (provide 'chinese-number)
