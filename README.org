@@ -41,6 +41,11 @@ and the following command to convert conversely:
 #+BEGIN_SRC
 cnum--convert-chinese-number-to-arabic (*not implemented now*)
 #+END_SRC
+If you want to use this converting in your elisp code, you should call the following two function:
+#+BEGIN_SRC
+cnum-convert-arabic-number-to-chinese
+cnum-convert-chinese-number-to-arabic
+#+END_SRC
    
 * Known issues
   
