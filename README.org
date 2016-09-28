@@ -3,8 +3,7 @@
 #+AUTHOR: zhcosin<zhcosin@163.com>
 #+DATETIME: 2016-09-28
 
-[[Click here if you are English user][Readme-en.org]]
-
+[[Re][Click here if you are English user]]
 * 简介
   
 =chinese-number= 是一个用来提供阿拉伯数字与（简体）中文数字之间相互转换的 =elisp= 包，它提供了以下特性:
