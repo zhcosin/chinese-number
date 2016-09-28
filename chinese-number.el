@@ -125,7 +125,7 @@
 (defun cnum--convert-arabic-number-to-chinese (number)
   "convert a number in Arabic format to Chinese."
   (interactive "nInput the Arabic number: ")
-  (message "The chinese format for number %d is %s" number (cnum-convert-arabic-number-to-chinese number)))
+  (message "%d = %s" number (cnum-convert-arabic-number-to-chinese number)))
 
 (defun cnum--convert-chinese-number-to-arabic (number)
   "convert a number in Chinese format to Arabic."

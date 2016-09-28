@@ -1,0 +1,54 @@
+#+TITLE: convert number format between Arabic and Chinese
+#+AUTHOR: zhcosin<zhcosin@163.com>
+#+DATE: 2016-09-26
+
+[[中文用户请移步中文说明][Readme.org]]
+
+* Introduction
+  
+The chinese-number is an emacs-lisp package for converting number format between Arabic and Chinese.
+
+It provides features bellow:
+1. Convert number format between Arabic and (Simplified) Chinese.(only arabic->chinese is implemented now)
+1. Chinese format support uppercase and lowercase.(not implementd now)
+
+* Usage
+
+** Installation
+   
+The package chinese-number lives in Git reposity, you can clone it by Git:
+#+BEGIN_SRC sh
+git clone https://github.com/zhcosin/chinese-number.git
+#+END_SRC
+Then, you should move to your emacs configure directory:
+#+BEGIN_SRC sh
+mv chinese-number ~/.emacs.d/chinese-number
+#+END_SRC
+
+** Configuration
+   
+Configurate chinese-number is very simple, add the following code to your .emacs file:
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'load-path "~/.emacs.d/chinese-number")
+(require 'chinese-number)
+#+END_SRC
+
+** Convert number format between Arabic and Chinese
+   
+You can do the following command to convert a Arabic number to Chinese:
+#+BEGIN_SRC
+cnum--convert-arabic-number-to-chinese
+#+END_SRC
+and the following command to convert conversely(*not implemented now*):
+#+BEGIN_SRC
+cnum--convert-chinese-number-to-arabic 
+#+END_SRC
+If you want to use this converting in your elisp code, you should call the following two function:
+#+BEGIN_SRC
+cnum-convert-arabic-number-to-chinese
+cnum-convert-chinese-number-to-arabic
+#+END_SRC
+   
+* Known issues
+  
+1. Problem of zero.

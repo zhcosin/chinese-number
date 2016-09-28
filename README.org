@@ -1,52 +1,54 @@
-#+TITLE: convert number format between Arabic and Chinese
+
+#+TITLE: 阿拉伯数字与中文数字之间相互转换
 #+AUTHOR: zhcosin<zhcosin@163.com>
-#+DATE: 2016-09-26
+#+DATETIME: 2016-09-28
 
-* Introduction
+[[Click here if you are English user][Readme-en.org]]
+
+* 简介
   
-The chinese-number is an emacs-lisp package for converting number format between Arabic and Chinese.
+=chinese-number= 是一个用来提供阿拉伯数字与（简体）中文数字之间相互转换的 =elisp= 包，它提供了以下特性:
+1. 将阿拉伯数字转换为中文(反向转换暂未实现)。
+1. 中文数字支持大小写。
 
-It provides features bellow:
-1. Convert number format between Arabic and (Simplified) Chinese.(only arabic->chinese is implemented now)
-1. Chinese format support uppercase and lowercase.(not implementd now)
+* 使用
 
-* Usage
-
-** Installation
+** 安装
    
-The package chinese-number lives in Git reposity, you can clone it by Git:
+=chinese-number= 托管在 =GitHub= 上，使用如下 =Git= 命令克隆到本地:
 #+BEGIN_SRC sh
 git clone https://github.com/zhcosin/chinese-number.git
 #+END_SRC
-Then, you should move to your emacs configure directory:
+然后将目录移动到你的 =emacs= 配置目录:
 #+BEGIN_SRC sh
 mv chinese-number ~/.emacs.d/chinese-number
 #+END_SRC
 
-** Configuration
+
+** 配置
    
-Configurate chinese-number is very simple, add the following code to your .emacs file:
+=chinese-number=的配置相当简单，把下面代码放置到 =.emacs= 文件中:
 #+BEGIN_SRC emacs-lisp
 (add-to-list 'load-path "~/.emacs.d/chinese-number")
 (require 'chinese-number)
 #+END_SRC
 
-** Convert number format between Arabic and Chinese
+** 阿拉伯数字与中文数字之间相互转换
    
-You can do the following command to convert a Arabic number to Chinese:
+要将阿拉伯数字转换为中文，可以使用如下命令:
 #+BEGIN_SRC
 cnum--convert-arabic-number-to-chinese
 #+END_SRC
-and the following command to convert conversely(*not implemented now*):
+而下面这个命令则可以完成反向的转换(*暂未实现*)
 #+BEGIN_SRC
 cnum--convert-chinese-number-to-arabic 
 #+END_SRC
-If you want to use this converting in your elisp code, you should call the following two function:
+如果想要在 =elisp= 代码中使用这样的数字转换，可以调用如下这两个函数:
 #+BEGIN_SRC
 cnum-convert-arabic-number-to-chinese
 cnum-convert-chinese-number-to-arabic
 #+END_SRC
    
-* Known issues
+* 已知问题
   
-1. Problem of zero.
+  文档结束处。
