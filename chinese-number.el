@@ -43,21 +43,21 @@
 ;;
 ;; If you want to convert a Arabic number to chinese, you can:
 ;;
-;;     M-x cnum--convert-arabic-number-to-chinese
+;;     M-x cnum-convert-arabic-number-to-chinese
 ;;
 ;; and input the Arbic number, or you may want to convert a number
 ;; from Chinese to Arabic, you can:
 ;;
-;;     M-x cnum--convert-chinese-number-to-arabic
+;;     M-x cnum-convert-chinese-number-to-arabic
 ;;
 ;; If you want use this converting in your elisp code, then you can
 ;; call the following two function:
 ;;
-;;     cnum-convert-arabic-number-to-chinese
+;;     cnum--convert-arabic-number-to-chinese
 ;;
 ;; and
 ;;
-;;     cnum-convert-chinese-number-to arabic
+;;     cnum--convert-chinese-number-to arabic
 ;;.
 ;;; 算法介绍
 ;;
@@ -77,95 +77,110 @@
 ;;; Code:
 
 (defvar cnum-chinese-use-lowercase t)
-(defvar cnum-lowercase-chinese-number-list (list "零" "一" "二" "三" "四" "五" "六" "七" "八" "九"))
-(defvar cnum-uppercase-chinese-number-list (list "零" "壹" "贰" "叁" "肆" "伍" "陆" "柒" "捌" "玖"))
-(defvar cnum-lowercase-chinese-weight-list (list "" "十" "百" "千"))
-(defvar cnum-uppercase-chinese-weight-list (list "" "拾" "百" "仟"))
-(defvar cnum-high-level-weight-list (list "" "万" "亿"))
+(defvar cnum--lowercase-chinese-number-list (list "零" "一" "二" "三" "四" "五" "六" "七" "八" "九"))
+(defvar cnum--uppercase-chinese-number-list (list "零" "壹" "贰" "叁" "肆" "伍" "陆" "柒" "捌" "玖"))
+(defvar cnum--lowercase-chinese-weight-list (list "" "十" "百" "千"))
+(defvar cnum--uppercase-chinese-weight-list (list "" "拾" "百" "仟"))
+(defvar cnum--high-level-weight-list (list "" "万" "亿"))
 
 
-(defun cnum-get-chinese-number-by-index (index)
+;;;###autoload
+(defun cnum--get-chinese-number-by-index (index)
   ;; 从中文数表中根据索引找出相应的中文数字
-  (nth index (if cnum-chinese-use-lowercase cnum-lowercase-chinese-number-list cnum-uppercase-chinese-number-list)))
+  (nth index (if cnum-chinese-use-lowercase cnum--lowercase-chinese-number-list cnum--uppercase-chinese-number-list)))
 
-(defun cnum-get-chinese-weight (index)
+;;;###autoload
+(defun cnum--get-chinese-weight (index)
   ;; 从中文权表中根据索引找出相应的中文权
-  (nth index (if cnum-chinese-use-lowercase cnum-lowercase-chinese-weight-list cnum-uppercase-chinese-weight-list)))
+  (nth index (if cnum-chinese-use-lowercase cnum--lowercase-chinese-weight-list cnum--uppercase-chinese-weight-list)))
 
-(defun cnum-get-chinese-high-level-weight (index)
+;;;###autoload
+(defun cnum--get-chinese-high-level-weight (index)
   ;; 从中文高阶权表根据索引找出相应的中文权
-  (nth index cnum-high-level-weight-list))
+  (nth index cnum--high-level-weight-list))
 
-(defun cnum-get-chinese-number-and-weight-general (number-index weight-index fun-to-convert-number fun-to-get-weight)
+;;;###autoload
+(defun cnum--get-chinese-number-and-weight-general (number-index weight-index fun-to-convert-number fun-to-get-weight)
   ;; 转换切片的一般过程，根据传入的转换函数分别转换数字和权，并将结果作字符串连接，对数字为零的，忽略权
   (if (= number-index 0)
       (funcall fun-to-convert-number 0)
     (concat (funcall fun-to-convert-number number-index) (funcall fun-to-get-weight weight-index))))
 
-(defun cnum-get-chinese-number-and-weight (number-index weight-index)
+;;;###autoload
+(defun cnum--get-chinese-number-and-weight (number-index weight-index)
   ;; 调用转换切片的一般过程，指定了单一数字转换函数和低阶权转换函数，以实现转换10000以下的数
-  (cnum-get-chinese-number-and-weight-general number-index weight-index 'cnum-get-chinese-number-by-index 'cnum-get-chinese-weight))
+  (cnum--get-chinese-number-and-weight-general number-index weight-index 'cnum--get-chinese-number-by-index 'cnum--get-chinese-weight))
 
-(defun cnum-get-chinese-number-and-weight-high (number weight-index base disable-zero is-last-slice)
+;;;###autoload
+(defun cnum--get-chinese-number-and-weight-high (number weight-index base disable-zero is-last-slice)
   ;; 调用转换切片的一般过程，指定了转换10000以下的数字的过程为数位转换过程，同时指定高阶权转换函数为转换权的函数，以实现10000以上的高阶转换，包含对零的特殊处理
   (let ((full-result
-	 (cnum-get-chinese-number-and-weight-general number weight-index 'cnum-convert-arabic-number-less-than-10000-to-chinese 'cnum-get-chinese-high-level-weight)))
+	 (cnum--get-chinese-number-and-weight-general number weight-index 'cnum--convert-arabic-number-less-than-10000-to-chinese 'cnum--get-chinese-high-level-weight)))
     (cond ((= number 0) (if disable-zero "" full-result))
-	  ((< number (/ base 10)) (if is-last-slice full-result (concat (cnum-get-chinese-number-by-index 0) full-result)))
+	  ((< number (/ base 10)) (if is-last-slice full-result (concat (cnum--get-chinese-number-by-index 0) full-result)))
 	  (t full-result))))
 
-(defun cnum-get-chinese-number-weight (number weight-index base disable-zero is-last-slice)
-  ;; 在 cnum-get-get-chinese-number-and-weight 的基础上实现对零的特殊处理
+;;;###autoload
+(defun cnum--get-chinese-number-weight (number weight-index base disable-zero is-last-slice)
+  ;; 在 cnum--get-get-chinese-number-and-weight 的基础上实现对零的特殊处理
   (if (= number 0)
-      (if disable-zero "" (cnum-get-chinese-number-by-index 0))
-    (cnum-get-chinese-number-and-weight number weight-index)))
+      (if disable-zero "" (cnum--get-chinese-number-by-index 0))
+    (cnum--get-chinese-number-and-weight number weight-index)))
 
-(defun cnum-convert-to-chinese-general-iter (number index slice-index next-is-zero base fun-to-convert-small-number)
+;;;###autoload
+(defun cnum--convert-to-chinese-general-iter (number index slice-index next-is-zero base fun-to-convert-small-number)
   ;; 递归转换，将原数除以基数(10或10000)的余数作基本转换，将其与对商的递归转换结果作字符连接，是最核心的转换过程
   (let ((this-slice (% number base))
 	(next-slice (/ number base)))
   (if (= next-slice 0)
       (funcall fun-to-convert-small-number number index base (if (= slice-index 0) nil next-is-zero) t)
-    (concat (cnum-convert-to-chinese-general-iter next-slice (+ index 1) (+ slice-index 1) (= this-slice 0) base fun-to-convert-small-number)
+    (concat (cnum--convert-to-chinese-general-iter next-slice (+ index 1) (+ slice-index 1) (= this-slice 0) base fun-to-convert-small-number)
 	    (funcall fun-to-convert-small-number this-slice index base next-is-zero nil)))))
 
-(defun cnum-convert-arabic-number-less-than-10000-to-chinese-iter (number index next-is-zero)
+;;;###autoload
+(defun cnum--convert-arabic-number-less-than-10000-to-chinese-iter (number index next-is-zero)
   ;; 指定基数为10，实现1000以内的数的迭代转换
-  (cnum-convert-to-chinese-general-iter number index 0 next-is-zero 10 'cnum-get-chinese-number-weight))
+  (cnum--convert-to-chinese-general-iter number index 0 next-is-zero 10 'cnum--get-chinese-number-weight))
 
-(defun cnum-convert-arabic-number-to-chinese-iter (number index next-is-zero)
+;;;###autoload
+(defun cnum--convert-arabic-number-to-chinese-iter (number index next-is-zero)
   ;; 指定基数为10000，实现任何正整数的迭代转换
-  (cnum-convert-to-chinese-general-iter number index 0 next-is-zero 10000 'cnum-get-chinese-number-and-weight-high))
+  (cnum--convert-to-chinese-general-iter number index 0 next-is-zero 10000 'cnum--get-chinese-number-and-weight-high))
 
-(defun cnum-convert-arabic-number-less-than-10000-to-chinese (number)
+;;;###autoload
+(defun cnum--convert-arabic-number-less-than-10000-to-chinese (number)
   ;; 转换10000以下的数的转换
-  (cnum-convert-arabic-number-less-than-10000-to-chinese-iter number 0 t))
+  (cnum--convert-arabic-number-less-than-10000-to-chinese-iter number 0 t))
 
-(defun cnum-convert-arabic-number-to-chinese (number)
+;;;###autoload
+(defun cnum--convert-arabic-number-to-chinese (number)
   ;; 将阿拉伯数字转换为中文的API
-  (cnum-convert-arabic-number-to-chinese-iter number 0 t))
+  (cnum--convert-arabic-number-to-chinese-iter number 0 t))
 
-(defun cnum-convert-chinese-number-to-arbic (number)
+;;;###autoload
+(defun cnum--convert-chinese-number-to-arbic (number)
   ;; 将中文数字转换为阿拉伯数字的API
   ;; TODO: implement.
   0)
 
-(defun cnum--convert-arabic-number-to-chinese (number)
+;;;###autoload
+(defun cnum-convert-arabic-number-to-chinese (number)
   ;; 供 emacs 调用的命令，将阿拉伯数字转换为中文
   "convert a number in Arabic format to Chinese."
   (interactive "nInput the Arabic number: ")
-  (message "%d = %s" number (cnum-convert-arabic-number-to-chinese number)))
+  (message "%d = %s" number (cnum--convert-arabic-number-to-chinese number)))
 
-(defun cnum--convert-chinese-number-to-arabic (number)
+;;;###autoload
+(defun cnum-convert-chinese-number-to-arabic (number)
   ;; 供 emacs 调用的命令，将中文数字转换为阿拉伯数字
   "convert a number in Chinese format to Arabic."
   (interactive "sInput the Chinese number: ")
   (message "NO SUPPORT: The converting from chinese to arabic is not support now!"))
 
 ;; for test
-;;(cnum--convert-arabic-number-to-chinese 0)
-;;(cnum--convert-arabic-number-to-chinese 1230)
-;;(cnum--convert-arabic-number-to-chinese 380070500)
+;;(cnum-convert-arabic-number-to-chinese 0)
+;;(cnum-convert-arabic-number-to-chinese 1230)
+;;(cnum-convert-arabic-number-to-chinese 380070500)
 
 (provide 'chinese-number)
 ;;; chinese-number.el ends here
