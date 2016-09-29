@@ -166,3 +166,4 @@
 ;;(cnum--convert-arabic-number-to-chinese 380070500)
 
 (provide 'chinese-number)
+;;; chinese-number.el ends here
