@@ -2,7 +2,7 @@
 #+AUTHOR: zhcosin<zhcosin@163.com>
 #+DATE: 2016-09-26
 
-[[Readme.org][中文用户请移步中文说明]]
+[[README.org][中文用户请移步中文说明]]
 
 * Introduction
   
