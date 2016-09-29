@@ -26,7 +26,7 @@ mv chinese-number ~/.emacs.d/chinese-number
 
 ** 配置
    
-=chinese-number=的配置相当简单，把下面代码放置到 =.emacs= 文件中:
+=chinese-number= 的配置相当简单，把下面代码放置到 =.emacs= 文件中:
 #+BEGIN_SRC emacs-lisp
 (add-to-list 'load-path "~/.emacs.d/chinese-number")
 (require 'chinese-number)
