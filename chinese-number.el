@@ -74,6 +74,8 @@
 ;;     1. 数字中间的连续任意个数的零，只转换为一个零，并且不带权.
 ;;     1. 对于一个切片，如果其数字小于基的十分之一，需要在前端补零(数字本来就是零除外)。
 
+;;; Code:
+
 (defvar cnum-chinese-use-lowercase t)
 (defvar cnum-lowercase-chinese-number-list (list "零" "一" "二" "三" "四" "五" "六" "七" "八" "九"))
 (defvar cnum-uppercase-chinese-number-list (list "零" "壹" "贰" "叁" "肆" "伍" "陆" "柒" "捌" "玖"))
@@ -166,3 +168,4 @@
 ;;(cnum--convert-arabic-number-to-chinese 380070500)
 
 (provide 'chinese-number)
+;;; chinese-number.el ends here
