@@ -1,4 +1,4 @@
-;;; chinese-number.el --- A package for converting number format between Arabic and Chinese.
+;;; chinese-number.el --- Convert numbers between Arabic and Chinese formats
 
 ;; * Header
 ;; Copyright (c) 2015, zhcosin
@@ -31,21 +31,11 @@
 ;; Chinese-number is a package for converting number format between
 ;; Arabic and Chinese.
 ;;
-;; Chinese-number lives in a Git repository. To obtain it, do
-;;
-;;     git clone https://github.com/zhcosin/chinese-number.git
-;;
-;; Move chinese-number to ~/.emacs.d/chinese-number (or somewhere
-;; else in the `load-path'). Then add the following lines to ~/.emacs:
-;;
-;;     (add-to-list 'load-path "~/.emacs.d/chinese-number")
-;;     (require 'chinese-number)
-;;
 ;; If you want to convert a Arabic number to chinese, you can:
 ;;
 ;;     M-x cnum-convert-arabic-number-to-chinese
 ;;
-;; and input the Arbic number, or you may want to convert a number
+;; and input the Arabic number, or you may want to convert a number
 ;; from Chinese to Arabic, you can:
 ;;
 ;;     M-x cnum-convert-chinese-number-to-arabic
@@ -58,6 +48,19 @@
 ;; and
 ;;
 ;;     cnum--convert-chinese-number-to arabic
+;;
+;;; Installation:
+;;
+;; Chinese-number lives in a Git repository. To obtain it, do
+;;
+;;     git clone https://github.com/zhcosin/chinese-number.git
+;;
+;; Move chinese-number to ~/.emacs.d/chinese-number (or somewhere
+;; else in the `load-path'). Then add the following lines to ~/.emacs:
+;;
+;;     (add-to-list 'load-path "~/.emacs.d/chinese-number")
+;;     (require 'chinese-number)
+;;
 ;;.
 ;;; 算法介绍
 ;;
