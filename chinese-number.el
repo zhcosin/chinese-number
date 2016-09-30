@@ -76,9 +76,6 @@
 
 ;;; Code:
 
-(autoload 'cnum-convert-arabic-number-to-chinese "chinese-number" "chinese-number" t)
-(autoload 'cnum-convert-chinese-number-to-arabic "chinese-number" "chinese-number" t)
-
 (defvar cnum-chinese-use-lowercase t)
 (defvar cnum--lowercase-chinese-number-list (list "零" "一" "二" "三" "四" "五" "六" "七" "八" "九"))
 (defvar cnum--uppercase-chinese-number-list (list "零" "壹" "贰" "叁" "肆" "伍" "陆" "柒" "捌" "玖"))
