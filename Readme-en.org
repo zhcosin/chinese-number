@@ -37,18 +37,19 @@ Configurate chinese-number is very simple, add the following code to your .emacs
    
 You can do the following command to convert a Arabic number to Chinese:
 #+BEGIN_SRC
-cnum--convert-arabic-number-to-chinese
+cnum-convert-arabic-number-to-chinese
 #+END_SRC
 and the following command to convert conversely(*not implemented now*):
 #+BEGIN_SRC
-cnum--convert-chinese-number-to-arabic 
+cnum-convert-chinese-number-to-arabic 
 #+END_SRC
 If you want to use this converting in your elisp code, you should call the following two function:
 #+BEGIN_SRC
-cnum-convert-arabic-number-to-chinese
-cnum-convert-chinese-number-to-arabic
+cnum--convert-arabic-number-to-chinese
+cnum--convert-chinese-number-to-arabic
 #+END_SRC
    
 * Known issues
   
-1. Problem of zero.
+
+  Document end here.

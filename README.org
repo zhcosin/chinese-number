@@ -36,18 +36,18 @@ mv chinese-number ~/.emacs.d/chinese-number
    
 要将阿拉伯数字转换为中文，可以使用如下命令:
 #+BEGIN_SRC
-cnum--convert-arabic-number-to-chinese
+cnum-convert-arabic-number-to-chinese
 #+END_SRC
 而下面这个命令则可以完成反向的转换(*暂未实现*)
 #+BEGIN_SRC
-cnum--convert-chinese-number-to-arabic 
+cnum-convert-chinese-number-to-arabic 
 #+END_SRC
 如果想要在 =elisp= 代码中使用这样的数字转换，可以调用如下这两个函数:
 #+BEGIN_SRC
-cnum-convert-arabic-number-to-chinese
-cnum-convert-chinese-number-to-arabic
+cnum--convert-arabic-number-to-chinese
+cnum--convert-chinese-number-to-arabic
 #+END_SRC
-   
+
 * 已知问题
   
   文档结束处。
