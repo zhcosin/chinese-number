@@ -147,7 +147,7 @@
   ;; 将阿拉伯数字转换为中文的API
   (cnum--convert-arabic-number-to-chinese-iter number 0 t))
 
-(defun cnum--convert-chinese-number-to-arbic (number)
+(defun cnum--convert-chinese-number-to-arabic (number)
   ;; 将中文数字转换为阿拉伯数字的API
   ;; TODO: implement.
   0)
