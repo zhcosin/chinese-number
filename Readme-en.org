@@ -16,7 +16,8 @@ It provides features bellow:
 
 ** Installation
    
-The package chinese-number lives in Git reposity, you can clone it by Git:
+org-webpage is now available from the famous emacs package repo [[melpa.milkbox.net][melpa]] so the recommended way is to install it through emacs package management system. 
+Because =chinese-number= lives in Git reposity, you can also clone it by Git:
 #+BEGIN_SRC sh
 git clone https://github.com/zhcosin/chinese-number.git
 #+END_SRC

@@ -14,7 +14,9 @@
 
 ** 安装
    
-=chinese-number= 托管在 =GitHub= 上，使用如下 =Git= 命令克隆到本地:
+=chinese-number= 现已收录进著名的 =Emacs= 包仓库 [[melpa.milkbox.net][melpa]]，推荐通过 =Emacs= 自带的包管理工具来安装它。
+
+另外 =chinese-number= 托管在 =GitHub= 上，也可以手工安装它，先使用如下 =Git= 命令克隆到本地:
 #+BEGIN_SRC sh
 git clone https://github.com/zhcosin/chinese-number.git
 #+END_SRC
